@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
 
-## Getting Started
+### 2. Frontend README
 
-First, run the development server:
+Navigate to your `frontend` folder in VS Code, create a new file named `README.md`, and paste the following content:
 
+```markdown
+# Interactive Comic Platform - Frontend Studio
+
+This is the Next.js frontend for the Interactive Comic Platform. It houses the cloud-based creator studio and the interactive comic viewer, leveraging modern web APIs to deliver haptic feedback, CSS scroll-driven animations, and synchronized Web Audio.
+
+## Tech Stack
+* **Framework:** Next.js (App Router)
+* **Language:** TypeScript
+* **Styling:** Tailwind CSS
+* **Package Manager:** npm
+
+## Prerequisites
+Ensure you have the following installed on your local machine:
+* Node.js (v20.0.0 or higher recommended)
+* Git
+
+## Local Setup Instructions
+
+**1. Clone the repository**
 ```bash
+git clone [https://github.com/PimpaLite/YOUR_FRONTEND_REPO_NAME.git](https://github.com/PimpaLite/YOUR_FRONTEND_REPO_NAME.git)
+cd YOUR_FRONTEND_REPO_NAME
+2. Install dependencies
+
+Bash
+npm install
+3. Start the development server
+
+Bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Viewing the App
+Once the server starts, open your browser and navigate to:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Local URL: http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Connecting to the Backend
+To fully test the application locally, ensure the FastAPI backend is also running simultaneously on port 8000. Cross-Origin Resource Sharing (CORS) is already configured on the backend to accept requests from this Next.js instance.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+### How to Push These to GitHub
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Once you have created and saved both `README.md` files in their respective folders, you can push them to GitHub using the standard Git workflow. 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For the backend:
+```powerscript
+cd D:\interactive-comic-platform\backend
+git add README.md
+git commit -m "docs: add backend setup instructions"
+git push
+And for the frontend:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Code snippet
+cd ..
+cd frontend
+git add README.md
+git commit -m "docs: add frontend setup instructions"
+git push
