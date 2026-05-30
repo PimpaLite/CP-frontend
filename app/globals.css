@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand Color Palette[cite: 1] */
+  --color-ghost-lavender: #ECE8F5;
+  --color-deep-charcoal: #1E1A2E;
+  --color-deep-purple: #6B3FA0;
+  --color-soft-violet: #9B59B6;
+  --color-soft-lilac: #E0D7F0;
+  --color-muted-lavender: #D5CCE8;
+  --color-muted-mauve: #7B6F8A;
+  --color-soft-coral: #E8635A;
+  --color-warm-yellow: #FFD700;
+
+  /* Typography Variables[cite: 1] */
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-righteous), ui-sans-serif, system-ui;
+
+  /* Cinematic Animations mapped to utility classes[cite: 1] */
+  --animate-zoom-out: zoom-out 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* 
+  IMPORTANT FIX: 
+  Standard CSS keyframes must sit OUTSIDE the @theme block in Tailwind v4 
+*/
+@keyframes zoom-out {
+  0% { transform: scale(8); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
