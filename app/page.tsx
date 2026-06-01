@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-// --- MOVED ICONS OUTSIDE THE MAIN COMPONENT --- //
 const StarIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={`text-warm-yellow drop-shadow-[0_0_8px_#FFD700] ${className}`}>
     <path d="M12 0C12 7 17 12 24 12C17 12 12 17 12 24C12 17 7 12 0 12C7 12 12 7 12 0Z" />
@@ -17,7 +16,6 @@ const BookIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// --- MAIN COMPONENT --- //
 export default function OpeningPage() {
   const [step, setStep] = useState(0); 
   const [selectedRole, setSelectedRole] = useState<"reader" | "author" | null>(null);
@@ -25,19 +23,25 @@ export default function OpeningPage() {
   
   const router = useRouter(); 
 
+  // Initial zoom out timer
   useEffect(() => {
     const timer = setTimeout(() => setStep(1), 3200); 
     return () => clearTimeout(timer);
   }, []);
 
+  // FIXED ROUTING LOGIC: Transports you to the correct page after the door swings open
   useEffect(() => {
     if (step === 4) {
       const transitionTimer = setTimeout(() => {
-        router.push("/discovery");
+        if (selectedRole === "author") {
+          router.push("/author/dashboard");
+        } else {
+          router.push("/discovery");
+        }
       }, 1000); 
       return () => clearTimeout(transitionTimer);
     }
-  }, [step, router]);
+  }, [step, router, selectedRole]);
 
   const handleRoleSelection = (role: "reader" | "author") => {
     setSelectedRole(role);
@@ -57,7 +61,6 @@ export default function OpeningPage() {
       <div className="absolute inset-0 opacity-60 bg-[linear-gradient(90deg,#1a110c_0px,#1a110c_38px,#241710_38px,#241710_40px)] bg-[length:40px_100%]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(74,48,34,0.6)_0%,_rgba(30,26,46,0.9)_100%)]"></div>
 
-      {/* SCALE WRAPPER */}
       <div className="absolute inset-0 flex items-center justify-center scale-[0.80] md:scale-[0.85] pointer-events-none z-10">
         
         {/* --- THE DETAILED STOREFRONT --- */}

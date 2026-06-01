@@ -19,6 +19,8 @@
   /* Cinematic Animations mapped to utility classes[cite: 1] */
   --animate-zoom-out: zoom-out 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+  --animate-slide-up-drawer: slide-up-drawer 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-down-drawer: slide-down-drawer 0.5s ease-in forwards;
 }
 
 /* 
@@ -40,4 +42,14 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
   }
+}
+
+@keyframes slide-up-drawer {
+  0% { transform: translateY(100vh); border-top-left-radius: 40px; border-top-right-radius: 40px; }
+  100% { transform: translateY(0); border-top-left-radius: 0px; border-top-right-radius: 0px; }
+}
+
+@keyframes slide-down-drawer {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
 }
