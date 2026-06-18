@@ -25,7 +25,7 @@ export default function DiscoveryPage() {
   const [openCupboard, setOpenCupboard] = useState<string | null>(null);
   const [selectedComic, setSelectedComic] = useState<string | null>(null);
   
-  // NEW: Search state to track what the user is typing
+  // Search state to track what the user is typing
   const [searchQuery, setSearchQuery] = useState("");
   
   // Drag-to-scroll state
@@ -80,7 +80,6 @@ export default function DiscoveryPage() {
 
         <div className="flex items-center gap-6 w-full md:w-auto">
           <div className="flex-1 md:w-80 relative hidden sm:block">
-            {/* NEW: Bound the input to the searchQuery state */}
             <input 
               type="text" 
               placeholder="Search comics..." 
@@ -107,12 +106,12 @@ export default function DiscoveryPage() {
       <div className="max-w-6xl mx-auto flex flex-col gap-16">
         
         {genres.map((genre) => {
-          // NEW: Filter the comics based on the search query
+          // Filter the comics based on the search query
           const filteredComics = mockComics.filter((comic) =>
             comic.title.toLowerCase().includes(searchQuery.toLowerCase())
           );
 
-          // NEW: Auto-open cupboards if the user is typing a search!
+          // Auto-open cupboards if the user is typing a search!
           const isActuallyOpen = openCupboard === genre.id || searchQuery.trim().length > 0;
 
           return (
@@ -133,7 +132,7 @@ export default function DiscoveryPage() {
                   style={{ border: "10px solid #3E2723" }}
                 >
                   
-                  {/* NEW: Empty state message if no comics match the search */}
+                  {/* Empty state message if no comics match the search */}
                   {filteredComics.length === 0 ? (
                     <div className="w-full flex flex-col items-center justify-center text-muted-mauve opacity-70">
                       <span className="text-4xl mb-2">📭</span>
@@ -148,7 +147,7 @@ export default function DiscoveryPage() {
                       onMouseMove={(e) => handleMouseMove(e, genre.id)}
                       className={`flex gap-8 overflow-x-auto w-full h-full items-center pb-4 pt-4 scrollbar-hide px-4 ${isActuallyOpen ? 'cursor-grab active:cursor-grabbing' : ''}`}
                     >
-                      {/* Mapping the FILTERED comics instead of mockComics */}
+                      {/* Mapping the FILTERED comics */}
                       {filteredComics.map((comic) => {
                         const uniqueId = `${genre.id}-${comic.id}`;
 
@@ -157,7 +156,10 @@ export default function DiscoveryPage() {
                             key={comic.id}
                             onClick={(e) => {
                               e.stopPropagation();
-                              if (!isDragging) setSelectedComic(uniqueId);
+                              // THE FIX: Click to toggle deselect
+                              if (!isDragging) {
+                                setSelectedComic(selectedComic === uniqueId ? null : uniqueId);
+                              }
                             }}
                             className={`relative min-w-[150px] md:min-w-[170px] h-full rounded-sm flex flex-col justify-end transition-all duration-300 ease-out origin-bottom 
                               hover:-translate-y-4 hover:-translate-x-1 hover:-rotate-2 hover:shadow-[15px_20px_25px_rgba(0,0,0,0.15)] 
@@ -187,6 +189,21 @@ export default function DiscoveryPage() {
                                 <span className="text-[11px] text-muted-mauve hover:text-soft-coral transition-colors cursor-pointer pointer-events-auto">♥</span>
                               </div>
                             </div>
+
+                            {/* THE FIX: The Read Button overlay with dynamic routing */}
+                            {selectedComic === uniqueId && (
+                              <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 rounded-sm backdrop-blur-[2px] animate-fade-in">
+                                <button 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    router.push(`/reader/read?id=${comic.id}`);
+                                  }}
+                                  className="bg-deep-purple hover:bg-[#4A2880] text-white px-6 py-2.5 rounded-full font-bold shadow-[0_5px_15px_rgba(107,63,160,0.5)] transform transition-transform hover:scale-105"
+                                >
+                                  Read Issue
+                                </button>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
